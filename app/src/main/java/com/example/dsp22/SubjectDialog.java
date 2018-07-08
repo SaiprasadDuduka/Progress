@@ -28,6 +28,10 @@ public class SubjectDialog extends DialogFragment {
         etMarks = (EditText)view.findViewById(R.id.etMarks);
         etTotalMarks = (EditText)view.findViewById(R.id.etTotalMarks);
 
+        if(MainActivity.selected){
+            etSubjectName.setText(MainActivity.subjectSelected.getSubjectName());
+        }
+
         builder.setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
@@ -39,6 +43,9 @@ public class SubjectDialog extends DialogFragment {
 
                             MainActivity.TEST_NAME_TABLE = MainActivity.spinner.getSelectedItem().toString();
                             SubjectNameDatabaseHandler db = new SubjectNameDatabaseHandler(getContext());
+                            if(MainActivity.selected){
+                                db.deleteSubjectName(MainActivity.TEST_NAME_TABLE,subjectName);
+                            }
                             db.insertSubjectDetails(MainActivity.TEST_NAME_TABLE,subjectName,marks,totalMarks);
 
                             ((MainActivity)getActivity()).populateListView();
@@ -51,13 +58,12 @@ public class SubjectDialog extends DialogFragment {
                                     getContext(),"Enter Details properly!",Toast.LENGTH_SHORT
                             ).show();
                         }
-
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        MainActivity.selected = false;
                     }
                 });
 
