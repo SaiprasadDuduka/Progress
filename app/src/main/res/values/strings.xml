@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Progress</string>
+    <string name="subject">Subject</string>
+    <string name="marks">Marks</string>
+</resources>
